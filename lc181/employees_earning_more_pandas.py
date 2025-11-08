@@ -57,14 +57,12 @@ employees = [
         'salary': 90000,
         'managerId': None,
     }
-
 ]
 
-employees = pd.DataFrame(employees)
-result = employees.merge(
-    employees,left_on='managerId',
-    right_on='id',
-    suffixes=('_emp', '_mgr')
-)
-result = result[result['salary_emp'] > result['salary_mgr']]
-final_result = result[['name_emp']].rename(columns={'name_emp': 'Employee'})
+employees_df = pd.DataFrame(employees)
+employees_merged = employees_df.merge(employees_df, left_on='managerId', right_on='id', suffixes=('_emp', '_mgr'))
+result = employees_merged[employees_merged['salary_emp'] > employees_merged['salary_mgr']]
+final = result[['name_emp']].rename(columns={'name_emp': 'Employee'})
+print(final)
+
+
