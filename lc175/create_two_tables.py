@@ -63,39 +63,49 @@ There is no address in the address table for the personId = 1 so we return null 
 addressId = 1 contains information about the address of personId = 2.
 """
 import sqlite3
-dp_path = 'two_tables.db'
-
-conn = sqlite3.connect(dp_path)
+conn = sqlite3.connect('person_address.db')
 cursor = conn.cursor()
+
 cursor.execute("""
-CREATE TABLE Person (
-    personId INTEGER PRIMARY KEY,
-    lastName VARCHAR,
-    firstName VARCHAR
-)
+    CREATE TABLE Person(
+        personId INTEGER PRIMARY KEY,
+        lastName VARCHAR,
+        firstName VARCHAR
+    )
 """)
+
 cursor.execute("""
-CREATE TABLE Address (
-    addressId INTEGER PRIMARY KEY,
-    personId INTEGER,
-    city VARCHAR,
-    state VARCHAR
-)
+    CREATE TABLE Address (
+        addressId INTEGER PRIMARY KEY,
+        personId INTEGER,
+        city VARCHAR,
+        state VARCHAR,
+    )
 """)
 
 cursor.executemany(
-    "INSERT INTO Person (personId, lastName, firstName) VALUES (?, ?, ?)",
+    "INSERT INTO Person (personId, lastName, firstName) VALUES (?,?,?)",
     [
         (1, 'Wang', 'Allen'),
-        (2, 'Alice', 'Bob'),
+        (2, 'Alice', 'Bob')
     ]
 )
+
 cursor.executemany(
-    "INSERT INTO Address (addressId, personId, city, state) VALUES (?, ?, ?, ?)",
+    "INSERT INTO Address (addressId, personId, city, state) VALUES (?,?,?,?)",
     [
-        (1,2,'New York City', 'New York'),
-        (2,3, 'Leetcode', 'California'),
+        (1, 2, 'New York City', 'New York'),
+        (2, 3, "Leetcode", "California")
     ]
 )
-conn.commit()
-conn.close()
+
+cursor.execute(
+    "select Person.firstName, Person.lastName, Address.city, Address.state from Person left join Address on Person.personId = Address.personId;"
+
+
+
+)
+
+
+
+

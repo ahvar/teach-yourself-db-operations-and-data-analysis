@@ -25,7 +25,11 @@ address = [
          "state": "NR"
     }
 ]
+
 person_df = pd.DataFrame(person)
+print(person_df)
 address_df = pd.DataFrame(address)
-person_and_address = person_df.merge(address_df, how='left', on='personId')
-print(person_and_address)
+print(address_df)
+print(person_df.merge(address_df, on='personId', how='left'))
+
+
