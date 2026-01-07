@@ -1,0 +1,31 @@
+To solve the problem in consecutive_numbers_pandas.py (see problem.txt), you need to find numbers (num) that appear at least three times consecutively in the logs DataFrame.
+
+Here’s a step-by-step walk-through of the pandas operations:
+
+1. Identify Consecutive Groups
+Use shift() to compare each row’s num with the previous row.
+When the value changes, it marks a new group.
+You can use cumsum() on this change to assign a unique group number
+to each consecutive block.
+
+logs['group'] = (logs['num'] != logs['num'].shift()).cumsum()
+
+2. Count the Size of Each Group
+Group by both group and num to get the size of each consecutive block.
+
+group_sizes = logs.groupby(['group', 'num']).size().reset_index(name='count')
+
+3. Filter Groups With At Least 3 Consecutive Occurrences
+Select groups where count >= 3:
+
+at_least_three = group_sizes[group_sizes['count'] >= 3]
+
+4. Get Unique Numbers
+Extract the unique num values from these groups:
+result = at_least_three['num'].unique()
+
+5. Format the Output
+If you want the result as a DataFrame with the required column name:
+
+output = pd.DataFrame({'ConsecutiveNums': result})
+

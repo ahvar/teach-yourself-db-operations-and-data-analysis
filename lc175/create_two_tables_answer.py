@@ -9,7 +9,7 @@
 +-------------+---------+
 personId is the primary key (column with unique values) for this table.
 This table contains information about the ID of some persons and their first and last names.
- 
+
 
 Table: Address
 
@@ -23,7 +23,6 @@ Table: Address
 +-------------+---------+
 addressId is the primary key (column with unique values) for this table.
 Each row of this table contains information about the city and state of one person with ID = PersonId.
- 
 
 Write a solution to report the first name, last name, city, and state of each person in the Person table.
 If the address of a personId is not present in the Address table, report null instead.
@@ -32,11 +31,11 @@ Return the result table in any order.
 
 The result format is in the following example.
 
- 
+
 
 Example 1:
 
-Input: 
+Input:
 Person table:
 +----------+----------+-----------+
 | personId | lastName | firstName |
@@ -51,61 +50,50 @@ Address table:
 | 1         | 2        | New York City | New York   |
 | 2         | 3        | Leetcode      | California |
 +-----------+----------+---------------+------------+
-Output: 
+Output:
 +-----------+----------+---------------+----------+
 | firstName | lastName | city          | state    |
 +-----------+----------+---------------+----------+
 | Allen     | Wang     | Null          | Null     |
 | Bob       | Alice    | New York City | New York |
 +-----------+----------+---------------+----------+
-Explanation: 
+Explanation:
 There is no address in the address table for the personId = 1 so we return null in their city and state.
 addressId = 1 contains information about the address of personId = 2.
 """
+
 import sqlite3
-conn = sqlite3.connect('person_address.db')
+
+conn = sqlite3.connect("two_tables.db")
 cursor = conn.cursor()
 
-cursor.execute("""
+cursor.execute(
+    """
     CREATE TABLE Person(
         personId INTEGER PRIMARY KEY,
         lastName VARCHAR,
         firstName VARCHAR
     )
-""")
-
-cursor.execute("""
-    CREATE TABLE Address (
-        addressId INTEGER PRIMARY KEY,
-        personId INTEGER,
-        city VARCHAR,
-        state VARCHAR,
-    )
-""")
-
-cursor.executemany(
-    "INSERT INTO Person (personId, lastName, firstName) VALUES (?,?,?)",
-    [
-        (1, 'Wang', 'Allen'),
-        (2, 'Alice', 'Bob')
-    ]
-)
-
-cursor.executemany(
-    "INSERT INTO Address (addressId, personId, city, state) VALUES (?,?,?,?)",
-    [
-        (1, 2, 'New York City', 'New York'),
-        (2, 3, "Leetcode", "California")
-    ]
+"""
 )
 
 cursor.execute(
-    "select Person.firstName, Person.lastName, Address.city, Address.state from Person left join Address on Person.personId = Address.personId;"
-
-
-
+    """
+    CREATE TABLE Address(
+        addressId INTEGER PRIMARY KEY,
+        personId INTEGER,
+        city VARCHAR,
+        state VARCHAR               
+    )
+"""
 )
 
+cursor.executemany(
+    """INSERT INTO Person (personId, lastName, firstName) VALUES (?,?,?)""",
+    [(1, "Wang", "Allen"), (2, "Alice", "Bob")],
+)
 
-
-
+cursor.executemany(
+    """INSERT INTO Address (addressId, personId, city, state) VALUES (?,?,?,?)""",
+    [(1, 2, "New York City", "New York"), (2, 3, "Leetcode", "California")],
+)
