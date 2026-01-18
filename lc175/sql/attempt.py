@@ -3,27 +3,27 @@ import sqlite3
 conn = sqlite3.connect("two_tables.db")
 cursor = conn.cursor()
 
+
 cursor.execute(
     """
     CREATE TABLE Person(
         personId INTEGER PRIMARY KEY,
         lastName VARCHAR,
         firstName VARCHAR
-    )
-"""
+)"""
 )
+
 
 cursor.execute(
     """
-    CREATE TABLE ADDRESS(
+    CREATE TABLE Address(
         addressId INTEGER PRIMARY KEY,
         personId INTEGER,
         city VARCHAR,
-        state VARCHAR          
+        state VARCHAR
     )
-"""
+    """
 )
-
 cursor.executemany(
     """INSERT INTO Person (personId, lastName, firstName) VALUES (?,?,?)""",
     [(1, "Wang", "Allen"), (2, "Alice", "Bob")],
@@ -37,7 +37,6 @@ cursor.executemany(
 cursor.execute(
     """
     SELECT Person.firstName, Person.lastName, Address.city, Address.state
-    FROM Person
-    LEFT JOIN Address ON Person.personId = Address.personId;
+    FROM Person LEFT JOIN Address on Person.personId = Address.personId;
 """
 )

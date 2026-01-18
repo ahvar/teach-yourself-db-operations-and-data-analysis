@@ -1,0 +1,6 @@
+What Each Parameter Does:
+
+employee.merge(employee, ...): Merging the DataFrame with itself
+right_on="id": Use the id column from the right DataFrame (second employee)
+left_on="managerId": Use the managerId column from the left DataFrame (first employee)
+suffixes=("_manager", ""): When columns have the same name, add _manager to right DataFrame columns, nothing to left DataFrame columns
