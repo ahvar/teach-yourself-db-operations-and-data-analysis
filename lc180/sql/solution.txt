@@ -1,0 +1,21 @@
+The JOIN conditions with id - 1 are used to find consecutive rows in the table.
+
+FROM Logs l1
+JOIN Logs l2 ON l1.id = l2.id - 1  -- l2's id is 1 more than l1's id
+JOIN Logs l3 ON l2.id = l3.id - 1  -- l3's id is 1 more than l2's id
+
+This creates triplets of consecutive rows:
+
+l1 (id=1), l2 (id=2), l3 (id=3): nums = 1,1,1 ✅
+l1 (id=2), l2 (id=3), l3 (id=4): nums = 1,1,2 ❌
+l1 (id=3), l2 (id=4), l3 (id=5): nums = 1,2,1 ❌
+l1 (id=4), l2 (id=5), l3 (id=6): nums = 2,1,2 ❌
+l1 (id=5), l2 (id=6), l3 (id=7): nums = 1,2,2 ❌
+
+Why Subtract 1?
+l1.id = l2.id - 1 means l1's id is one less than l2's id
+This ensures l1 and l2 are adjacent rows (l1 comes right before l2)
+Same logic for l2 and l3
+The Goal:
+Find any number that appears in 3 consecutive rows. The JOIN ensures we're looking at rows that are actually next to each other in sequence, not random rows.
+
