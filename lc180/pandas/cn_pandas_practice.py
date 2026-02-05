@@ -11,12 +11,12 @@ logs = pd.DataFrame(
         {"id": 7, "num": 2},
     ]
 )
-
-# identify the consecutive groups
+# use shift to compare the value in num to the previous value
 logs["group"] = (logs["num"] != logs["num"].shift()).cumsum()
 
 group_sizes = logs.groupby(["group", "num"]).size().reset_index(name="count")
 
 at_least_three = group_sizes[group_sizes["count"] >= 3]
-
 result = at_least_three["num"].unique()
+
+output = pd.DataFrame({"ConsecutiveNums": result})

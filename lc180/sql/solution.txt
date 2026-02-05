@@ -1,4 +1,5 @@
-The JOIN conditions with id - 1 are used to find consecutive rows in the table.
+The JOIN conditions with id - 1 are used to find consecutive rows in
+the table.
 
 FROM Logs l1
 JOIN Logs l2 ON l1.id = l2.id - 1  -- l2's id is 1 more than l1's id

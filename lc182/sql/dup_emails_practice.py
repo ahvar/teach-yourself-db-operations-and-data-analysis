@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect("people.db")
+conn = sqlite3.connect("persons.db")
 cursor = conn.cursor()
 
 cursor.execute(
@@ -13,15 +13,15 @@ cursor.execute(
 )
 
 cursor.executemany(
-    """INSERT INTO Person(id, email) VALUES (?,?)""",
-    [(1, "a@b.com"), (2, "c@d.com"), (3, "a@b.com")],
+    """INSERT INTO Person(id, email) VALUES (?,?)"""[
+        (1, "a@b.com"), (2, "c@d.com"), (3, "a@b.com")
+    ]
 )
-
 
 cursor.execute(
     """
     SELECT email
-    FROM Person
+    AS Person
     GROUP BY email
     HAVING COUNT(email) > 1
 """

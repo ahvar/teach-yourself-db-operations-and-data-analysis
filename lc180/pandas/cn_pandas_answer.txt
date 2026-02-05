@@ -1,4 +1,6 @@
-To solve the problem in consecutive_numbers_pandas.py (see problem.txt), you need to find numbers (num) that appear at least three times consecutively in the logs DataFrame.
+To solve the problem in consecutive_numbers_pandas.py (see problem.txt),
+you need to find numbers (num) that appear at least three times consecutively
+in the logs DataFrame.
 
 Here’s a step-by-step walk-through of the pandas operations:
 
