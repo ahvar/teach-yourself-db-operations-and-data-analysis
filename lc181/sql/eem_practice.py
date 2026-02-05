@@ -5,19 +5,17 @@ cursor = conn.cursor()
 
 cursor.execute(
     """
-
     CREATE TABLE Employee(
         id INTEGER PRIMARY KEY,
         name VARCHAR,
         salary INTEGER,
-        managerId INTEGER
+        managerId INTEGER           
     )
 """
 )
 
 cursor.executemany(
-    """
-    INSERT INTO Employee(id, name, salary, managerId) VALUES (?,?,?,?)""",
+    """INSERT INTO Employee(id, name, salary, managerId) VALUES (?,?,?,?)""",
     [
         (1, "Joe", 70000, 3),
         (2, "Henry", 80000, 4),
@@ -31,7 +29,7 @@ cursor.execute(
     SELECT e.name
     FROM Employee e
     JOIN Employee m
-    ON e.managerId = m.id
-    WHERE e.salary > m.salary;
-"""
+    ON e.managerId = e.id
+    WHERE e.salary > m.salary
+    """
 )
